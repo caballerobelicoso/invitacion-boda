@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación de Boda - Joselyn & Fernando</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState } = React;
+
+        function WeddingInvitation() {
+            const [accessCode, setAccessCode] = useState('');
+            const [invitationData, setInvitationData] = useState(null);
+            const [rsvpStatus, setRsvpStatus] = useState(null);
+            const [showConfirmation, setShowConfirmation] = useState(false);
+            const [storedRsvp, setStoredRsvp] = useState(null);
+
+            const invitations = {
+                'AMOR2026': {
+                    guests: ['María Fernanda López'],
+                    couple: 'Joselyn & Fernando',
+                    date: '31 de enero de 2026',
+                    ceremony_time: '15:00 hrs',
+                    ceremony_venue: 'Iglesia Nuestra Señora de la Natividad, Av. La Lorena, Santo Domingo',
+                    reception_venue: 'Quinta Rincón Verde, km. 8 vía Las Mercedes, Santo Domingo',
+                    dress_code: 'Formal elegante',
+                },
+                'FELIZ2026': {
+                    guests: ['Carlos Mendez', 'Patricia Gómez'],
+                    couple: 'Joselyn & Fernando',
+                    date: '31 de enero de 2026',
+                    ceremony_time: '15:00 hrs',
+                    ceremony_venue: 'Iglesia Nuestra Señora de la Natividad, Av. La Lorena, Santo Domingo',
+                    reception_venue: 'Quinta Rincón Verde, km. 8 vía Las Mercedes, Santo Domingo',
+                    dress_code: 'Formal elegante',
+                },
+                'BODA2026': {
+                    guests: ['Roberto Núñez'],
+                    couple: 'Joselyn & Fernando',
+                    date: '31 de enero de 2026',
+                    ceremony_time: '15:00 hrs',
+                    ceremony_venue: 'Iglesia Nuestra Señora de la Natividad, Av. La Lorena, Santo Domingo',
+                    reception_venue: 'Quinta Rincón Verde, km. 8 vía Las Mercedes, Santo Domingo',
+                    dress_code: 'Formal elegante',
+                }
+            };
+
+            const handleAccessCode = () => {
+                const upperCode = accessCode.toUpperCase().trim();
+                if (invitations[upperCode]) {
+                    setInvitationData(invitations[upperCode]);
+                    setAccessCode('');
+                } else {
+                    alert('Código de invitación no válido. Por favor, verifica tu código.');
+                    setAccessCode('');
+                }
+            };
+
+            const handleRSVP = (status) => {
+                setRsvpStatus(status);
+                setStoredRsvp(status);
+                setShowConfirmation(true);
+                setTimeout(() => setShowConfirmation(false), 3000);
+            };
+
+            const handleBack = () => {
+                setInvitationData(null);
+                setRsvpStatus(null);
+                setAccessCode('');
+            };
+
+            if (!invitationData) {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-green-50 to-white flex items-center justify-center p-4">
+                        <div className="w-full max-w-lg">
+                            <div className="bg-white rounded-2xl shadow-2xl p-8 text-center" style={{ borderTop: '6px solid #7b9e6e' }}>
+                                <div className="w-16 h-16 mx-auto mb-6 text-4xl animate-pulse">
+                                    💚
+                                </div>
+                                
+                                <h1 className="text-2xl font-serif text-gray-800 mb-2 whitespace-nowrap">
+                                    Joselyn & Fernando
+                                </h1>
+                                
+                                <p className="text-gray-600 text-lg mb-8" style={{ color: '#8b9d7e' }}>
+                                    Te invitamos a nuestra boda
+                                </p>
+                                
+                                <div className="space-y-4">
+                                    <p className="text-sm text-gray-500 mb-4">
+                                        Ingresa tu código de invitación para acceder
+                                    </p>
+                                    
+                                    <input
+                                        type="text"
+                                        value={accessCode}
+                                        onChange={(e) => setAccessCode(e.target.value.toUpperCase())}
+                                        placeholder="Código de invitación"
+                                        className="w-full px-4 py-3 border-2 rounded-lg focus:outline-none text-center text-lg uppercase tracking-widest"
+                                        style={{ borderColor: '#c4b5a0' }}
+                                        onKeyDown={(e) => e.key === 'Enter' && handleAccessCode()}
+                                    />
+                                    
+                                    <button
+                                        onClick={handleAccessCode}
+                                        className="w-full text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                                        style={{ backgroundColor: '#7b9e6e' }}
+                                    >
+                                        Acceder
+                                    </button>
+                                </div>
+                                
+                                <p className="text-xs text-gray-400 mt-6">
+                                    Invitación exclusiva personalizada
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-amber-50 via-green-50 to-white flex items-center justify-center p-4 py-8">
+                    <div className="w-full max-w-2xl">
+                        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                            <div className="h-40 flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #7b9e6e 0%, #a8b896 100%)' }}>
+                                <div className="text-center">
+                                    <div className="text-5xl mb-2">💚</div>
+                                    <p className="text-white text-sm tracking-widest">JUNTO CON NUESTRAS FAMILIAS</p>
+                                </div>
+                            </div>
+
+                            <div className="p-8 md:p-12 text-center space-y-8">
+                                <div>
+                                    <h1 className="text-4xl font-serif mb-2 whitespace-nowrap" style={{ color: '#7b9e6e' }}>
+                                        Joselyn & Fernando
+                                    </h1>
+                                    <p className="text-gray-500 text-sm tracking-widest">nos honran con su presencia</p>
+                                </div>
+
+                                <div className="border-y-2 py-8 space-y-6" style={{ borderColor: '#c4b5a0' }}>
+                                    <div className="flex items-center justify-center space-x-4 text-gray-700">
+                                        <div className="text-3xl" style={{ color: '#7b9e6e' }}>📅</div>
+                                        <div className="text-left">
+                                            <p className="text-sm text-gray-500">CEREMONIA</p>
+                                            <p className="text-lg font-semibold">{invitationData.date}</p>
+                                            <p className="text-lg font-semibold">{invitationData.ceremony_time}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-start justify-center space-x-4 text-gray-700">
+                                        <div className="text-3xl" style={{ color: '#7b9e6e' }}>📍</div>
+                                        <div className="text-left">
+                                            <p className="text-sm text-gray-500">IGLESIA</p>
+                                            <p className="text-lg font-semibold">{invitationData.ceremony_venue}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-start justify-center space-x-4 text-gray-700">
+                                        <div className="text-3xl" style={{ color: '#7b9e6e' }}>📍</div>
+                                        <div className="text-left">
+                                            <p className="text-sm text-gray-500">RECEPCIÓN</p>
+                                            <p className="text-lg font-semibold">{invitationData.reception_venue}</p>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <p className="text-sm text-gray-500 mb-2">CÓDIGO DE VESTIMENTA</p>
+                                        <p className="text-lg font-semibold text-gray-700">{invitationData.dress_code}</p>
+                                    </div>
+                                </div>
+
+                                <div className="rounded-lg p-6" style={{ backgroundColor: '#f5f3f0' }}>
+                                    <p className="text-xs text-gray-500 uppercase tracking-widest mb-3">Invitación dirigida a:</p>
+                                    <div className="space-y-2">
+                                        {invitationData.guests.map((guest, idx) => (
+                                            <p key={idx} className="text-xl font-semibold text-gray-800">
+                                                {guest}
+                                            </p>
+                                        ))}
+                                    </div>
+                                    <p className="text-xs text-gray-600 mt-4 italic">
+                                        Esta invitación es exclusivamente personal y no transferible. La asistencia está limitada únicamente a los nombres mencionados.
+                                    </p>
+                                </div>
+
+                                <div className="rounded-lg p-6" style={{ backgroundColor: '#f9f7f4' }}>
+                                    <p className="text-sm font-semibold text-gray-800 mb-3">SOBRE LOS REGALOS</p>
+                                    <p className="text-gray-700 text-sm leading-relaxed mb-3">
+                                        Tu presencia es lo más importante para nosotros. Si deseas obsequiarnos algo especial, estaremos encantados de recibir tu presente a la cuenta bancaria adjunta en la fecha que mejor se ajuste a tus posibilidades.
+                                    </p>
+                                    <div className="bg-white rounded p-4 text-sm space-y-2 text-gray-700">
+                                        <p><span className="font-semibold">Banco:</span> Pichincha</p>
+                                        <p><span className="font-semibold">Tipo de cuenta:</span> Ahorros</p>
+                                        <p><span className="font-semibold">Titular:</span> Luis Fernando Agila Díaz</p>
+                                        <p><span className="font-semibold">Número de cuenta:</span> 2211438965</p>
+                                        <p><span className="font-semibold">Email:</span> fernandoagila97@gmail.com</p>
+                                    </div>
+                                    <p className="text-xs text-gray-600 italic mt-4">
+                                        Agradecemos infinitamente tu generosidad y consideración. 💝
+                                    </p>
+                                </div>
+
+                                <div className="space-y-4 pt-4">
+                                    <p className="text-gray-700 font-semibold">¿CONFIRMAS TU ASISTENCIA?</p>
+                                    
+                                    {!storedRsvp ? (
+                                        <div className="flex gap-4 justify-center">
+                                            <button
+                                                onClick={() => handleRSVP('confirmed')}
+                                                className="flex items-center space-x-2 px-6 py-3 text-white rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+                                                style={{ backgroundColor: '#7b9e6e' }}
+                                            >
+                                                <span>✓</span>
+                                                <span>Confirmar</span>
+                                            </button>
+                                            
+                                            <button
+                                                onClick={() => handleRSVP('declined')}
+                                                className="flex items-center space-x-2 px-6 py-3 text-white rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+                                                style={{ backgroundColor: '#c4b5a0' }}
+                                            >
+                                                <span>✕</span>
+                                                <span>Declinar</span>
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className="text-center">
+                                            {storedRsvp === 'confirmed' && (
+                                                <div className="border rounded-lg px-4 py-3 text-sm" style={{ 
+                                                    borderColor: '#7b9e6e',
+                                                    backgroundColor: '#f0f5f0',
+                                                    color: '#5a7a4d'
+                                                }}>
+                                                    <div className="text-3xl mb-2">✓</div>
+                                                    <p className="font-semibold">¡Confirmado!</p>
+                                                    <p>Tu asistencia ha sido registrada. Nos vemos el 31 de enero. 💚</p>
+                                                </div>
+                                            )}
+                                            {storedRsvp === 'declined' && (
+                                                <div className="border rounded-lg px-4 py-3 text-sm" style={{ 
+                                                    borderColor: '#c4b5a0',
+                                                    backgroundColor: '#faf8f5',
+                                                    color: '#8b7d6b'
+                                                }}>
+                                                    <div className="text-3xl mb-2">✕</div>
+                                                    <p className="font-semibold">Respuesta registrada</p>
+                                                    <p>Entendemos. Te agradecemos tu consideración.</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="text-xs text-gray-500 space-y-1 pt-4">
+                                    <p>Esperamos contar con tu presencia en este día tan especial</p>
+                                    <div style={{ color: '#a8b896' }}>💚</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mt-6 text-center">
+                            <button
+                                onClick={handleBack}
+                                className="font-semibold text-sm transition-colors"
+                                style={{ color: '#7b9e6e' }}
+                            >
+                                ← Salir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<WeddingInvitation />);
+    </script>
+</body>
+</html>
